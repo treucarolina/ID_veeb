@@ -1,0 +1,30 @@
+{
+  "name": "id_veeb",
+  "version": "1.0.0",
+  "description": "Veebiprogrammeerimise tundides tehtud express.js  projekt ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://treucarolina@github.com/treucarolina/ID_veeb.git"
+  },
+  "keywords": [
+    "õppetöö",
+    "veebiprogrammeerimine",
+    "node.js",
+    "ewpress.js",
+    "Tallinna",
+    "Ülikool"
+  ],
+  "author": "Carolina Treu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/treucarolina/ID_veeb/issues"
+  },
+  "homepage": "https://github.com/treucarolina/ID_veeb#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
