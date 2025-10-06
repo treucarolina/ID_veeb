@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="utf-8">
+  <title>Carolina Treu, veebiprogrammeerimine</title>
+</head>
+<body>
+  <img src="/images/vp_banner_2025_ID.jpg" alt="kursuse bänner">
+  <ul>
+	<li><a href="/">Avalehele</a></li>
+  </ul>
+  <h2><%= heading %></h2>
+  <ol>
+    <% if (Array.isArray(listData)) { %>
+      <% listData.forEach(function(listItem){ %>
+        <li><%= listItem %></li>
+      <% }); %>
+    <% } else { %>
+      <li>Andmed puuduvad</li>
+    <% } %>
+  </ol>
+</body>
+</html>
+</html>

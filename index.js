@@ -11,6 +11,8 @@ app.use(express.static("public"));
 //päringu URL-i parsimine, eraldame POST osa. False, kui ainult tekst, true, kui muud infot Kahjuks
 app.use(bodyparser.urlencoded({extended: false}));
 
+
+
 app.get("/", (req, res)=>{
 	//res.send("Express.js läks edukalt käima!");
 	res.render("index");
@@ -32,8 +34,24 @@ app.get("/vanasonad", (req, res)=>{
 	
 });
 
+app.get("/visitlog", (req, res)=>{
+	fs.readFile("public/txt/visitlog.txt", "utf8", (err, data)=>{
+		if(err){
+			res.render("visitlog", {heading: "Külastuslogi", listData: ["Kahjuks külastusi ei leitud!"]});
+		} else {
+			let visitlog = data.split(";");
+			res.render("visitlog", {heading: "Külastuslogi", listData: visitlog});	
+		}
+	});
+	
+});
+
 app.get("/regvisit", (req, res)=>{
 	res.render("regvisit");
+});
+
+app.get("/visitlog", (req,res)=>{
+	res.render("visitlog");
 });
 
 app.post("/regvisit", (req, res)=>{
@@ -45,7 +63,7 @@ app.post("/regvisit", (req, res)=>{
 		}
 		else {
 			//faili senisele sisule lisamine
-			fs.appendFile("public/txt/visitlog.txt", req.body.nameInput + ";", (err)=>{
+			fs.appendFile("public/txt/visitlog.txt", req.body.firstNameInput + " " + req.body.lastNameInput + " " + req.body.nowWd + ";", (err)=>{
 				if(err){
 					throw(err);
 				}
@@ -56,6 +74,10 @@ app.post("/regvisit", (req, res)=>{
 			});
 		}
 	});
+});
+
+app.get("/visitregistered", (req, res) => {
+	res.render("visitregistered");
 });
 
 app.listen(5217);
