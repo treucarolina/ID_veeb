@@ -16,8 +16,12 @@
   </ul>
   <h2>Eesti filmidega seotud inimesed</h2>
   <ul><% personList.forEach(function(listItem){ %>
-	<li><%= listItem.first_name %> <%= listItem.last_name %>, sündinud <%= listItem.born %></li>
-	<% }); %>
+	<li><%= listItem.first_name %> <%= listItem.last_name %>, sündinud <%= listItem.born %>
+	
+	<% if (listItem.deceased != "null"){ %>
+		, surnud <%= listItem.deceased %>
+		<% }; %>
+	<% }); %></li>
   </ul>
 </body>
 </html>
