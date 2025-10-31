@@ -12,16 +12,12 @@
   <ul>
 	<li><a href="/">Avalehele</a></li>
 	<li><a href="/eestifilm">Eesti filmi avalehele</a></li>
-	<li><a href="/eestifilm/inimesed_add">Lisa Eesti filmiga seotud inimesi</a></li>
+	<li><a href="/eestifilm/filmid_add">Lisa Eesti filme</a></li>
   </ul>
-  <h2>Eesti filmidega seotud inimesed</h2>
-  <ul><% personList.forEach(function(listItem){ %>
-	<li><%= listItem.first_name %> <%= listItem.last_name %>, sündinud <%= listItem.born %>
-	<% if (listItem.deceased != "null"){ %>
-		, surnud <%= listItem.deceased %>
-		<% }; %>
-	<% }); %></li>
+  <h2>Eesti filmid</h2>
+  <ul><% movieList.forEach(function(listItem){ %>
+	<li><%= listItem.title %> <%= listItem.production_year %> <%= listItem.duration %> <%= listItem.description %></li>
+	<% }); %>
   </ul>
 </body>
-</html>
 </html>

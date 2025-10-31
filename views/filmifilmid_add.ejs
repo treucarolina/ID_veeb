@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="utf-8">
+  <title>Carolina Treu, veebiprogrammeerimine</title>
+</head>
+<body>
+  <img src="/images/vp_banner_2025_ID.jpg" alt="kursuse bänner">
+  <h1>Carolina Treu, veebiprogrammeerimine</h1>
+  <p>See leht on tehtud <a href="https://www.tlu.ee/dt">Tallinna Ülikooli</a> veebiprogrammeerimise kursusel ja ei sisalda mõistlikku sisu.</p>
+  <hr>
+  <ul>
+	<li><a href="/">Avalehele</a></li>
+	<li><a href="/eestifilm">Eesti filmi avalehele</a></li>
+  </ul>
+  <h2>Filmid</h2>
+  <form method="POST">
+    <label for="titleInput">Filmi pealkiri</label>
+	<input id="titleInput" name="titleInput" type="text" placeholder="Filmi pealkiri..." required>
+	<br>
+	<label for="productionYearInput">Filmi valmimisaasta</label>
+	<input id="productionYearInput" name="productionYearInput" type="text" placeholder="Filmi valmimisaasta..." required>
+	<br>
+	<label for="durationInput">Filmi kestus</label>
+	<input id="durationInput" name="durationInput" type="text" placeholder="Filmi kestus..." required>
+	<br>
+	<label for="descriptionInput">Filmi kirjeldus</label>
+	<textarea id="descriptionInput" name="descriptionInput" cols="100" placeholder="Filmi lühikirjeldus..."></textarea>
+	<br>
+	<input id="movieSubmit" name="movieSubmit" type="submit" value="Salvesta">
+  </form>
+  <p><%=notice%></p>
+</html>
