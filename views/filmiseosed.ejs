@@ -15,9 +15,8 @@
 	<li><a href="/eestifilm/filmiseosed_add">Lisa filmiga seotud töökohti</a></li>
   </ul>
   <h2>Eesti filmidega seotud seosed</h2>
- <!--  pole õige  -->
   <ul><% person_in_movieList.forEach(function(listItem){ %>
-	<li><%= listItem.p %> <%= listItem.description %></li>
+	<li><%= listItem.person_id %> <%= listItem.position_id %> <%= listItem.movie_id %></li>
 	<% }); %>
   </ul>
 </body>

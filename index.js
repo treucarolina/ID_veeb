@@ -13,8 +13,8 @@ const app = express();
 app.set("view engine", "ejs");
 //määrame kasutamiseks "avaliku" kataloogi
 app.use(express.static("public"));
-//päringu URL-i parsimine, eraldame POST osa. False, kui ainult tekst, true, kui muud infot Kahjuks
-app.use(bodyparser.urlencoded({extended: false}));
+//päringu URL-i parsimine, eraldame POST osa. False, kui ainult tekst, true, kui muud infot 
+app.use(bodyparser.urlencoded({extended: true}));
 
 //loon andmebaasi ühenduse (conn-connection)
 /* const conn = mysql.createConnection({
@@ -52,7 +52,7 @@ app.get("/vanasonad", (req, res)=>{
 	
 });
 
-app.get("/visitlog", (req, res)=>{
+/* app.get("/visitlog", (req, res)=>{
 	let listData = [];
 	fs.readFile("public/txt/visitlog.txt", "utf8", (err, data)=>{
 		if(err){
@@ -67,15 +67,15 @@ app.get("/visitlog", (req, res)=>{
 			res.render("genericlist", {heading: "Registreeritud kأ¼lastused", listData: listData});
 		}
 	});
-});
+}); */
 
 app.get("/regvisit", (req, res)=>{
 	res.render("regvisit");
 });
 
-app.get("/visitlog", (req,res)=>{
+/* app.get("/visitlog", (req,res)=>{
 	res.render("visitlog");
-});
+}); */
 
 app.post("/regvisit", (req, res)=>{
 	console.log(req.body);
@@ -106,5 +106,9 @@ app.get("/visitregistered", (req, res) => {
 //Eesti filmi marsruudid
 const eestifilmRouter = require("./routes/eestifilmRoutes")
 app.use("/eestifilm", eestifilmRouter);
+
+//Eesti filmi marsruudid
+const galleryphotoupRouter = require("./routes/galleryphotoupRoutes")
+app.use("/galleryphotoupload", galleryphotoupRouter);
 
 app.listen(5217);

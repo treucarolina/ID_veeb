@@ -13,8 +13,10 @@ const {
 	filmMovie,
 	filmMovieAdd,
 	filmMovieAddPost,
+	filmConnections,
 	filmConnectionsAdd,
-	filmConnectionsAddPost} = require("../controllers/eestifilmControllers");
+	filmConnectionsAddPost,
+	/* visitLog */} = require("../controllers/eestifilmControllers");
 
 router.route("/").get(filmHomePage);
 router.route("/inimesed").get(filmPeople);
@@ -26,7 +28,9 @@ router.route("/ametid_add").post(filmPositionAddPost);
 router.route("/filmid").get(filmMovie);
 router.route("/filmid_add").get(filmMovieAdd);
 router.route("/filmid_add").post(filmMovieAddPost);
+router.route("/filmiseosed").get(filmConnections);
 router.route("/filmiseosed_add").get(filmConnectionsAdd);
 router.route("/filmiseosed_add").post(filmConnectionsAddPost);
+/* router.route("/visitlog").get(visitLog); */
 
 module.exports = router;
