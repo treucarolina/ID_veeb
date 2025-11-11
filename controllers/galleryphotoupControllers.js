@@ -51,6 +51,7 @@ const galleryphotoupPagePost = async (req, res)=>{
 			console.log("Andmebaasiühendus suletus!");
 		}
 	}
+};
 		
 	/* let sqlReq = "INSERT INTO person (first_name, last_name, born, deceased) VALUES (?,?,?,?)";
 	
@@ -81,7 +82,7 @@ const galleryphotoupPagePost = async (req, res)=>{
 			}
 		}
 	} */
-};
+
 
 
 

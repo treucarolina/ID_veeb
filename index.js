@@ -1,11 +1,12 @@
 const express = require("express");
 const fs = require("fs");
+const mysql = require("mysql2/promise");
 const bodyparser = require("body-parser");
 //lisan andmebaasiga suhtlemiseks mooduli
 //nüüd, async jaoks kasutame mysql2 promise osa
 //const mysql = require("mysql2/promise");
 //lisan andmebaasi juurdepääsuinfo
-//const dbInfo = require("../../../../tcaroconfig");
+const dbInfo = require("../../../../tcaroconfig");
 const dateEt = require("./src/dateTimeET");
 //me loome objekti, mis ongi express.js programm ja edasi kasutamegi seda
 const app = express();
@@ -15,7 +16,7 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 //päringu URL-i parsimine, eraldame POST osa. False, kui ainult tekst, true, kui muud infot 
 app.use(bodyparser.urlencoded({extended: true}));
-
+const sharp = require("sharp");
 //loon andmebaasi ühenduse (conn-connection)
 /* const conn = mysql.createConnection({
 	host: dbInfo.configData.host,
@@ -24,18 +25,39 @@ app.use(bodyparser.urlencoded({extended: true}));
 	database: dbInfo.configData.dataBase
 }); */
 
-/* const dbConf = {
+	const dbConf = {
 	host: dbInfo.configData.host,
 	user: dbInfo.configData.user,
 	password: dbInfo.configData.passWord,
 	database: dbInfo.configData.dataBase
-}; */
+};
 
-app.get("/", (req, res)=>{
+/* app.get("/", async  (req, res)=>{
 	//res.send("Express.js läks edukalt käima!");
+	let conn;
+	const sqlReq = "SELECT filename, alttext FROM galleryphotos WHERE id=(SELECT MAX(id) FROM galleryphotos WHERE privacy=? AND deleted IS NULL)";
+	try {
+		conn = await mysql.createConnection(dbConf);
+		console.log("Andmebaasiühendus loodud!");
+		await sharp(req.file.path).composite([{input:await resolve(./images/vp_logo_small.png), left: 50, bottom: 50}]);
+		const [rows, fields] = await conn.execute(sqlReq [3]);
+		res.render("index", {galleryphotosList: rows});
+	}
+	catch(err) {
+		console.log("Viga: " + err);
+		res.render("index", {galleryphotosList: []});
+	}
+	finally {
+		if(conn){
+			await conn.end();
+			console.log("Andmebaasiühendus suletus!");
+		}
+	}
+}); */
+
+app.get("/", async  (req, res)=>{
 	res.render("index");
 });
-
 app.get("/timenow", (req, res)=>{
 	res.render("timenow", {nowDate: dateEt.longDate(), nowWd: dateEt.weekDay()});
 });
@@ -107,8 +129,19 @@ app.get("/visitregistered", (req, res) => {
 const eestifilmRouter = require("./routes/eestifilmRoutes")
 app.use("/eestifilm", eestifilmRouter);
 
-//Eesti filmi marsruudid
+const visitRouter = require("./routes/visitRoutes")
+app.use(visitRouter);
+
+//Piltide marsruudid
 const galleryphotoupRouter = require("./routes/galleryphotoupRoutes")
 app.use("/galleryphotoupload", galleryphotoupRouter);
+
+//Galerii marsruudid
+const photogalleryRouter = require("./routes/photogalleryRoutes")
+app.use("/photogallery", photogalleryRouter);
+
+//Uudiste marsruudid
+const newsRouter = require("./routes/newsRoutes")
+app.use("/news", newsRouter);
 
 app.listen(5217);

@@ -233,11 +233,11 @@ const filmConnections = async (req, res)=>{
 		conn = await mysql.createConnection(dbConf);
 		console.log("Andmebaasiühendus loodud!");
 		const [rows, fields] = await conn.execute(sqlReq);
-		res.render("filmiseosed", {connectionsList: rows});
+		res.render("filmiseosed", {person_in_movieList: rows});
 	}
 	catch(err) {
 		console.log("Viga: " + err);
-		res.render("filmiseosed", {connectionsList: []});
+		res.render("filmiseosed", {person_in_movieList: []});
 	}
 	finally {
 		if(conn){
@@ -261,7 +261,7 @@ const filmConnectionsAdd = (req, res)=>{
 
 const filmConnectionsAddPost = async (req, res)=>{
 	let conn;
-	let sqlReq = "SELECT (first_name, last_name, role, title) FROM person JOIN `position` ON (person.id = position.person_id JOIN movie ON movie.id = position.movie_id) VALUES (?,?,?)";
+	let sqlReq = "SELECT (first_name, last_name, role, title) FROM person JOIN `position` ON (person.id = position.person_id JOIN movie ON movie.id = position.movie_id) VALUES (?,?,?,?)";
 	
 	if(!req.body.personSelect || !req.body.positionSelect || !req.body.movieSelect > new Date()){
 		res.render("filmiseosed_add", {notice: "Andmed on vigased! Vaata üle!"});
@@ -289,35 +289,6 @@ const filmConnectionsAddPost = async (req, res)=>{
 };
 
 
-/* const visitlog = async (req, res)=>{
-	let conn;
-	let listData = [];
-	fs.readFile ("public/txt/visitlog.txt", "utf8");
-	try {
-		await tempListData = data.split(";");
-		console.log("List tehtud.")
-		await for(let i = 0; i < tempListData.length - 1; i ++){
-				listData.push(tempListData[i]);
-			}
-		res.render("genericlist", {heading: "Registreeritud kأ¼lastused", listData: listData});
-	}
-	catch(err) {
-		console.log("Viga: " + err);
-		res.render("genericlist", {heading: "Registreeritud kأ¼lastused", listData: ["Ei leidnud أ¼htegi kأ¼lastust!"]});
-	}
-	finally {
-		if(conn){
-			await conn.end();
-			console.log("Ühendus suletus!")
-		}
-	}
-}; */
-
-
-/* const visitLog = (req,res)=>{
-	res.render("visitlog");
-}; */
-
 
 
 module.exports = {
@@ -333,6 +304,5 @@ module.exports = {
 	filmMovieAddPost,
 	filmConnections,
 	filmConnectionsAdd,
-	filmConnectionsAddPost,
-/* 	visitLog */
+	filmConnectionsAddPost
 };
