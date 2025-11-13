@@ -16,7 +16,6 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 //päringu URL-i parsimine, eraldame POST osa. False, kui ainult tekst, true, kui muud infot 
 app.use(bodyparser.urlencoded({extended: true}));
-const sharp = require("sharp");
 //loon andmebaasi ühenduse (conn-connection)
 /* const conn = mysql.createConnection({
 	host: dbInfo.configData.host,
@@ -32,32 +31,33 @@ const sharp = require("sharp");
 	database: dbInfo.configData.dataBase
 };
 
-/* app.get("/", async  (req, res)=>{
-	//res.send("Express.js läks edukalt käima!");
+app.get("/", async (req, res)=>{
 	let conn;
-	const sqlReq = "SELECT filename, alttext FROM galleryphotos WHERE id=(SELECT MAX(id) FROM galleryphotos WHERE privacy=? AND deleted IS NULL)";
 	try {
 		conn = await mysql.createConnection(dbConf);
-		console.log("Andmebaasiühendus loodud!");
-		await sharp(req.file.path).composite([{input:await resolve(./images/vp_logo_small.png), left: 50, bottom: 50}]);
-		const [rows, fields] = await conn.execute(sqlReq [3]);
-		res.render("index", {galleryphotosList: rows});
+		let sqlReq = "SELECT filename, alttext FROM galleryphotos WHERE id=(SELECT MAX(id) FROM galleryphotos WHERE privacy=? AND deleted IS NULL)";
+		const privacy = 3;
+		const [rows, fields] = await conn.execute(sqlReq, [privacy]);
+		console.log(rows);
+		let imgAlt = "Avalik foto";
+		if(rows[0].alttext != ""){
+			imgAlt = rows[0].alttext;
+		}
+		res.render("index", {imgFile: "gallery/normal/" + rows[0].filename, imgAlt: imgAlt});
 	}
-	catch(err) {
-		console.log("Viga: " + err);
-		res.render("index", {galleryphotosList: []});
+	catch(err){
+		console.log(err);
+		//res.render("index");
+		res.render("index", {imgFile: "images/otsin_pilte.jpg", imgAlt: "Tunnen end, kui pilti otsiv lammas ..."});
 	}
 	finally {
 		if(conn){
 			await conn.end();
-			console.log("Andmebaasiühendus suletus!");
+			console.log("AndmebaasiÃ¼hendus suletud!");
 		}
 	}
-}); */
-
-app.get("/", async  (req, res)=>{
-	res.render("index");
 });
+
 app.get("/timenow", (req, res)=>{
 	res.render("timenow", {nowDate: dateEt.longDate(), nowWd: dateEt.weekDay()});
 });

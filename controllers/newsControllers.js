@@ -13,32 +13,19 @@ const dbConf = {
 //@route GET /photogallery
 //@access public
 
-const newsHome = (req, res)=>{
-	res.render("uudised");
-}
 
-const photogalleryHome = async (req, res)=>{
+const newsHome = async (req, res)=>{
 	let conn;
+	const sqlReq = "SELECT * FROM news";
 	try {
-	  conn = await mysql.createConnection(dbConf);
-	  let sqlReq = "SELECT filename, alttext FROM galleryphotos WHERE privacy >= ? AND deleted IS NULL";
-	  const privacy = 2;
-	  const [rows,fields] = await conn.execute(sqlReq, [privacy]);
-	  console.log(rows);
-	  let galleryData = [];
-	  for (let i = 0; i < rows.length; i ++){
-		  let altText = "Galeriipilt";
-		  if(rows[i].alttext != ""){
-			  altText = rows[i].alttext;
-		  }
-		  galleryData.push({src: rows[i].filename, alt: altText});
-	  }
-	  //esimene pool, mis nimega saadateakse, teine pool, kust võetakse (galleryData)
-	  res.render("photogallery", {galleryData: galleryData, imagehref: "/gallery/thumbs/"});
+		conn = await mysql.createConnection(dbConf);
+		console.log("Andmebaasiühendus loodud!");
+		const [rows, fields] = await conn.execute(sqlReq);
+		res.render("uudised", {newsList: rows});
 	}
 	catch(err) {
-		console.log(err);
-		res.render("photogallery", {galleryData: [], imagehref: "/gallery/thumbs/"});
+		console.log("Viga: " + err);
+		res.render("uudised", {newsList: []});
 	}
 	finally {
 		if(conn){
@@ -48,7 +35,36 @@ const photogalleryHome = async (req, res)=>{
 	}
 };
 
+const newsAdd = (req, res)=>{
+	res.render("uudised_add");
+};
 
 
+const newsAddPost = async (req, res)=>{
+	let conn;
+	let sqlReq = "INSERT INTO news (title, content, added, photo) VALUES (?,?,?,?)";
+	try {
+		conn = await mysql.createConnection(dbConf);
+		console.log("Andmebaasiühendus loodud!");
+		let deceasedDate = null;
+		const [result] = await conn.execute(sqlReq, [req.body.title, req.body.content, req.body.added, req.body.photo]);
+		console.log("Salvestati kirje id:" + result.insertId);
+		res.render("uudised_add", {notice: "Andmed on salvestatud!"});
+	}
+	catch(err){
+		console.log("Viga: " + err);
+		res.render("uudised_add", {notice: "Tekkis tehniline viga:" + err});
+	}
+	finally {
+		if(conn){
+			await conn.end();
+		console.log("Andmebaasiühendus suletus!");
+		}
+	}
+};
 
-module.exports = {photogalleryHome};
+module.exports = {
+	newsHome,
+	newsAdd,
+	newsAddPost
+};
