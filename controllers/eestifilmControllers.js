@@ -23,6 +23,7 @@ const filmHomePage = (req, res)=>{
 const filmPeople = async (req, res)=>{
 	let conn;
 	const sqlReq = "SELECT * FROM person";
+	
 	try {
 		conn = await mysql.createConnection(dbConf);
 		console.log("Andmebaasiühendus loodud!");
@@ -277,7 +278,7 @@ const filmConnectionsAddPost = async (req, res)=>{
 		}
 		catch(err){
 			console.log("Viga: " + err);
-			res.render("filmifilmid_add", {notice: "Tekkis tehniline viga:" + err});
+			res.render("filmiseosed_add", {notice: "Tekkis tehniline viga:" + err});
 		}
 		finally {
 			if(conn){

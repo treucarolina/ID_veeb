@@ -1,5 +1,6 @@
 const mysql = require("mysql2/promise");
-//const fs = require("fs").promises;
+const fs = require("fs").promises;
+const sharp = require("sharp");
 const dbInfo = require("../../../../../tcaroconfig");
 
 const dbConf = {
@@ -36,19 +37,27 @@ const newsHome = async (req, res)=>{
 };
 
 const newsAdd = (req, res)=>{
-	res.render("uudised_add");
+	res.render("uudised_add", {notice: "Ootan sisestust!"});
 };
 
 
 const newsAddPost = async (req, res)=>{
 	let conn;
-	let sqlReq = "INSERT INTO news (title, content, added, photo) VALUES (?,?,?,?)";
+	let sqlReq = "INSERT INTO news (title, content, expire, photo, photoalt, userid) WHERE expire > ? VALUES (?,?,?,?,?,?)";
+	
+	if(!req.body.title || !req.body.content || !req.body.expire > new Date()){
+		res.render("uudised_add", {notice: "Andmed on vigased! Vaata üle!"});
+		return;
+	}
 	try {
-		conn = await mysql.createConnection(dbConf);
+		const fileName = "vp_" + Date.now() + ".jpg";
+		console.log(fileName);conn = await mysql.createConnection(dbConf);
+		await fs.rename(req.file.path, req.file.destination + fileName);
 		console.log("Andmebaasiühendus loodud!");
-		let deceasedDate = null;
-		const [result] = await conn.execute(sqlReq, [req.body.title, req.body.content, req.body.added, req.body.photo]);
+		await normalImageProcessor.toFile("./public/newsPhoto/" + fileName);
+		const userId = 1;
 		console.log("Salvestati kirje id:" + result.insertId);
+		const [result] = await conn.execute(sqlReq, [req.body.title, req.body.content, req.body.expire > new Date(), req.body.photo, req.body.photoalt, req.body.userid]);
 		res.render("uudised_add", {notice: "Andmed on salvestatud!"});
 	}
 	catch(err){

@@ -12,7 +12,7 @@
   <ul>
 	<li><a href="/">Avalehele</a></li>
   </ul>
-  <h2>Filmid</h2>
+  <h2>Uudise lisamine</h2>
   <form method="POST">
     <label for="titleInput">Uudise pealkiri</label>
 	<input id="titleInput" name="titleInput" type="text" placeholder="Uudise pealkiri..." required>
@@ -22,6 +22,12 @@
 	<br>
 	<label for="contentInput">Uudise sisu</label>
 	<textarea id="contentInput" name="contentInput" cols="100" placeholder="Uudise sisu..."></textarea>
+	<br>
+	<label for="photoInput">Vali pildifail</label>
+	<input id ="photoInput" name="photoInput" type="file">
+	<br>
+	<label for="altInput">Pildi alternatiivtekst</label>
+	<input id="altInput" name="altInput" width="200" type="text" placeholder="Sellel pildil on...">
 	<br>
 	<input id="newsSubmit" name="newsSubmit" type="submit" value="Salvesta">
   </form>

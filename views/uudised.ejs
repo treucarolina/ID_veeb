@@ -12,11 +12,11 @@
   <ul>
 	<li><a href="/">Avalehele</a></li>
 	<li><a href="/eestifilm">Eesti filmi avalehele</a></li>
-	<li><a href="/eestifilm/filmid_add">Lisa Eesti filme</a></li>
+	<li><a href="/news/uudised_add">Uudised</a></li>
   </ul>
   <h2>Uudised</h2>
   <ul><% newsList.forEach(function(listItem){ %>
-	<li><%= listItem.title %> <%= listItem.content %> <%= listItem.added %> <%= listItem.photo %></li>
+	<li><%= listItem.title %> <%= listItem.content %> <%= listItem.added %> <%= listItem.expire %> <%= listItem.photo %></li>
 	<% }); %>
   </ul>
 </body>

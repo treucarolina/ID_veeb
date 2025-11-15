@@ -103,8 +103,6 @@ const galleryphotoupPagePost = async (req, res)=>{
 		}
 	} */
 
-const controllers = require("../controllers/galleryphotoupControllers");
-console.log("Loaded controllers:", controllers);
 
 module.exports = {
 	galleryphotoupPage,
