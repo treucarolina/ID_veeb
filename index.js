@@ -38,12 +38,16 @@ app.get("/", async (req, res)=>{
 		let sqlReq = "SELECT filename, alttext FROM galleryphotos WHERE id=(SELECT MAX(id) FROM galleryphotos WHERE privacy=? AND deleted IS NULL)";
 		const privacy = 3;
 		const [rows, fields] = await conn.execute(sqlReq, [privacy]);
+		
+		let sqlReqNews = "SELECT title, content, added, expire, photo, photoalt FROM news WHERE id=(SELECT MAX(id) FROM news WHERE deleted IS NULL)";
+		const [newsRows] = await conn.execute(sqlNews);
+		
 		console.log(rows);
 		let imgAlt = "Avalik foto";
 		if(rows[0].alttext != ""){
 			imgAlt = rows[0].alttext;
 		}
-		res.render("index", {imgFile: "gallery/normal/" + rows[0].filename, imgAlt: imgAlt});
+		res.render("index", {imgFile: "gallery/normal/" + rows[0].filename, imgAlt: imgAlt, photoFile: "newsPhoto/"});
 	}
 	catch(err){
 		console.log(err);
