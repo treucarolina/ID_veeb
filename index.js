@@ -39,8 +39,8 @@ app.get("/", async (req, res)=>{
 		const privacy = 3;
 		const [rows, fields] = await conn.execute(sqlReq, [privacy]);
 		
-		let sqlReqNews = "SELECT title, content, added, expire, photo, photoalt FROM news WHERE id=(SELECT MAX(id) FROM news WHERE deleted IS NULL)";
-		const [newsRows] = await conn.execute(sqlNews);
+		//let sqlNews = "SELECT title, content, added, expire, photo, photoalt FROM news WHERE id=(SELECT MAX(id) FROM news WHERE deleted IS NULL)";
+		//const [newsRows] = await conn.execute(sqlNews);
 		
 		console.log(rows);
 		let imgAlt = "Avalik foto";
@@ -147,5 +147,9 @@ app.use("/photogallery", photogalleryRouter);
 //Uudiste marsruudid
 const newsRouter = require("./routes/newsRoutes")
 app.use("/news", newsRouter);
+
+//Konto loomise marsruudid
+const signupRouter = require("./routes/signupRoutes")
+app.use("/signup", signupRouter);
 
 app.listen(5217);

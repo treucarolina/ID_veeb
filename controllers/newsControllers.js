@@ -55,8 +55,6 @@ const newsAddPost = async (req, res)=>{
 	console.log("Saabunud andmed:", req.body);
     console.log("Saabunud fail:", req.file);
 	
-	
-	
 	if(!req.body.titleInput || !req.body.contentInput || !req.body.expireInput){
 		res.render("uudised_add", {notice: "Andmed on vigased! Vaata üle!"});
 		return;
