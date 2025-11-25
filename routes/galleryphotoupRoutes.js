@@ -1,8 +1,11 @@
 const express = require("express");
 const multer = require("multer");
+const loginCheck = require("../src/checklogin");
 
 const router = express.Router();
-//seadistame vahevara fotode üleslaadimiseks kindlasse kataloogi
+//kأµigile marsruutidele lisan sisselogimise kontrolli vahevara
+router.use(loginCheck.isLogin);
+//seadistame vahevara fotode أ¼leslaadimiseks kindlasse kataloogi
 const uploader = multer({dest: "./public/gallery/orig/"});
 
 //kontrollerid

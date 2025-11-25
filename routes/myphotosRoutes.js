@@ -8,11 +8,11 @@ router.use(loginCheck.isLogin);
 
 //kontrollerid
 const {
-	photogalleryHome,
-	photogalleryPage} = require("../controllers/photogalleryControllers");
+	myphotosHome,
+	myphotosPage} = require("../controllers/myphotosControllers");
 
-router.route("/").get(photogalleryHome);
+router.route("/").get(myphotosHome);
 
-router.route("/:page").get(photogalleryPage);
+router.route("/:page").get(myphotosPage);
 
 module.exports = router;

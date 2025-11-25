@@ -1,6 +1,10 @@
 const express = require("express");
-const router = express.Router();
 const multer = require("multer");
+// üks punkt sama kataloog, kaks punkti läheb routesi kataloogist välja
+const loginCheck = require("../src/checklogin");
+const router = express.Router();
+//kõigile marsruutidele lisan sisselogimise kontrolli vahevara
+router.use(loginCheck.isLogin);
 const uploader = multer({dest: "./public/newsPhoto/"});
 
 //kontrollerid
