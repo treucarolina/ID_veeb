@@ -1,6 +1,8 @@
 const express = require("express");
+require("dotenv").config();
 const fs = require("fs");
 const mysql = require("mysql2/promise");
+process.env.DB_HOST
 //sessioonihadur
 const session = require("express-session");
 const bodyparser = require("body-parser");
@@ -9,13 +11,15 @@ const dateEt = require("./src/dateTimeET");
 const loginCheck = require("./src/checklogin");
 //me loome objekti, mis ongi express.js programm ja edasi kasutamegi seda
 const app = express();
-app.use(session({secret: dbInfo.configData.sessionSecret, saveUninitialized: true, resave: true}));
+app.use(session({secret: process.env.SES_SECRET, saveUninitialized: true, resave: true}));
 //määrame renderdajaks ejs
 app.set("view engine", "ejs");
 //määrame kasutamiseks "avaliku" kataloogi
 app.use(express.static("public"));
 //päringu URL-i parsimine, eraldame POST osa. False, kui ainult tekst, true, kui muud infot 
 app.use(bodyparser.urlencoded({extended: true}));
+
+//console.log(process.env.DB_HOST);
 
 const dbConf = {
 	host: dbInfo.configData.host,

@@ -88,11 +88,35 @@ const myphotosPage = async (req, res)=>{
 	}
 };
 
+const altAndPrivacyPost = async (req, res)=> {
+	let conn;
+	console.log(req.body);
+	
+	try {
+		let sqlReq = "UPDATE galleryphotos SET privacy - ?, alttext - ? WHERE id - ?";
+		const userId = req.session.userId;
+	    conn = await mysql.createConnection(dbConf);
+	    const [result] = await conn.execute(sqlReq, [req.body.altInput, req.body.privacyInput, userId]);
+		res.render("myphotos");
+	}
+	catch(err) {
+	  console.log(err);
+	  res.render("myphotos");
+	}
+	finally {
+	  if(conn){
+		await conn.end();
+		console.log("AndmebaasiÃ¼hendus suletud!");
+	  }
+	}
+};
 
 
 
 
 module.exports = {
 	myphotosHome,
+	altAndPrivacyPost,
 	myphotosPage
+	
 };

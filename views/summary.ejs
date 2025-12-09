@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="utf-8">
+  <title>Carolina Treu, veebiprogrammeerimine</title>
+</head>
+<body>
+  <img src="/images/vp_banner_2025_ID.jpg" alt="kursuse bänner">
+  <h1>Carolina Treu, veebiprogrammeerimine</h1>
+  <p>See leht on tehtud <a href="https://www.tlu.ee/dt">Tallinna Ülikooli</a> veebiprogrammeerimise kursusel ja ei sisalda mõistlikku sisu.</p>
+  <hr>
+  <ul>
+	<li><a href="/viljavedu">Viljavedu</a></li>
+  </ul>
+  <h2>Kõik viljaveod</h2>
+  <form method="POST">
+  <select id="veduSelect" name="veduSelect">
+  <option selected disabled>Vali autonumber</option>
+  <option value="1">123ABC</option>
+  <option value="2">234BCD</option>
+  </select>
+  
+  <form method="POST">
+    <label for="veduSelect">Vali autonumber</label>
+	<br>
+	<select id="veduSelect" name="veduSelect">
+		<option selected disabled>Vali autonumber</option>
+		<% viljaveduList.forEach(function(viljavedu) { %>
+			<option value="<%= viljavedu.id %>"><%= person.number %> <%= viljavedu.inWeight %>, <%= viljavedu.outWeight %></option>
+		<% }); %>
+	</select>
+	<br>
+  <ul><% viljaveduList.forEach(function(listItem){ %>
+	<li>auto regsitrinumber: <%= listItem.number %>, sisenemismass: <%= listItem.inWeight %>, väljumismass: <%= listItem.outWeight %>, vilja kogumass: <%= listItem.cropWeight %>
+	<% }); %></li>
+  </ul>
+</body>
+</html>
+</html>

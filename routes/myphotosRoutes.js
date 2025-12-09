@@ -9,9 +9,11 @@ router.use(loginCheck.isLogin);
 //kontrollerid
 const {
 	myphotosHome,
+	altAndPrivacyPost,
 	myphotosPage} = require("../controllers/myphotosControllers");
 
 router.route("/").get(myphotosHome);
+
 
 router.route("/:page").get(myphotosPage);
 

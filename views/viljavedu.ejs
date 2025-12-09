@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="utf-8">
+  <title>Carolina Treu, veebiprogrammeerimine</title>
+</head>
+<body>
+  <img src="/images/vp_banner_2025_ID.jpg" alt="kursuse bänner">
+  <h1>Carolina Treu, veebiprogrammeerimine</h1>
+  <p>See leht on tehtud <a href="https://www.tlu.ee/dt">Tallinna Ülikooli</a> veebiprogrammeerimise kursusel ja ei sisalda mõistlikku sisu.</p>
+  <hr>
+  <ul>
+	<li><a href="/viljaveoesileht/summary">Vaata viljaveo kokkuvõtet</a></li>
+  </ul>
+  <h2>Lisa viljavedusid</h2>
+  <form method="POST">
+	<br>
+	<label for="numberInput">Autonumber</label>
+	<input id="numberInput" name="numberInput" type="text" placeholder="Autonumber..."required>
+	<br>
+	<label for="inWeightInput">Sisenemismass</label>
+	<input id="inWeightInput" name="inWeightInput" type="text" placeholder="Sisenemismass..."required> 
+	<br>
+	<label for="outWeightInput">väljumismass</label>
+	<input id="outWeightInput" name="outWeightInput" type="text" placeholder="Väljumismass..."required> 
+	<br>
+	<input id="viljaveduSubmit" name="viljaveduSubmit" type="submit" value="Salvesta">
+  </form>
+  <p><%=notice%></p>
+</html>
