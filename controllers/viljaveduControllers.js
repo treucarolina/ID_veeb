@@ -81,7 +81,27 @@ const viljaveduAddPost = async (req, res)=>{
 	//}
 };
 
-
+const viljaveduValitud = async (req, res)=>{
+	let conn;
+	const id = req.body.veduSelect;
+	let sqlReq = "SELECT * FROM viljavedu WHERE id = ?";
+	try {
+		conn = await mysql.createConnection(dbConf);
+		console.log("Andmebaasiühendus loodud!");
+		const [rows, fields] = await conn.execute(sqlReq, [id]);
+		res.render("valitudauto", {viljaveduList: rows});
+	}
+	catch(err) {
+		console.log("Viga: " + err);
+		res.render("valitudauto", {viljaveduList: []});
+	}
+	finally {
+		if(conn){
+			await conn.end();
+			console.log("Andmebaasiühendus suletus!");
+		}
+	}
+};
 
 
 
@@ -91,5 +111,6 @@ module.exports = {
 	viljaveduHomePage,
 	viljaveduSummary,
 	viljaveduAdd,
-	viljaveduAddPost
+	viljaveduAddPost,
+	viljaveduValitud
 };

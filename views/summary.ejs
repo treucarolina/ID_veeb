@@ -12,23 +12,17 @@
   <ul>
 	<li><a href="/viljavedu">Viljavedu</a></li>
   </ul>
-  <h2>Kõik viljaveod</h2>
-  <form method="POST">
-  <select id="veduSelect" name="veduSelect">
-  <option selected disabled>Vali autonumber</option>
-  <option value="1">123ABC</option>
-  <option value="2">234BCD</option>
-  </select>
   
-  <form method="POST">
+  <form method="POST", action = "/viljaveoesileht/valitudauto">
     <label for="veduSelect">Vali autonumber</label>
 	<br>
 	<select id="veduSelect" name="veduSelect">
 		<option selected disabled>Vali autonumber</option>
 		<% viljaveduList.forEach(function(viljavedu) { %>
-			<option value="<%= viljavedu.id %>"><%= person.number %> <%= viljavedu.inWeight %>, <%= viljavedu.outWeight %></option>
+			<option value="<%= viljavedu.id %>"><%= viljavedu.number %> </option>
 		<% }); %>
 	</select>
+	<input id="viljaveduSubmit" name="viljaveduSubmit" type="submit" value="Salvesta">
 	<br>
   <ul><% viljaveduList.forEach(function(listItem){ %>
 	<li>auto regsitrinumber: <%= listItem.number %>, sisenemismass: <%= listItem.inWeight %>, väljumismass: <%= listItem.outWeight %>, vilja kogumass: <%= listItem.cropWeight %>

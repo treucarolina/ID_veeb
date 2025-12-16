@@ -6,11 +6,13 @@ const {
 	viljaveduHomePage,
 	viljaveduSummary,
 	viljaveduAdd,
-	viljaveduAddPost} = require("../controllers/viljaveduControllers");
+	viljaveduAddPost,
+	viljaveduValitud} = require("../controllers/viljaveduControllers");
 
 router.route("/").get(viljaveduHomePage);
 router.route("/viljavedu").get(viljaveduAdd);
 router.route("/viljavedu").post(viljaveduAddPost);
 router.route("/summary").get(viljaveduSummary);
+router.route("/valitudauto").post(viljaveduValitud);
 
 module.exports = router;
