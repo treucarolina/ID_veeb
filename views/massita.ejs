@@ -13,7 +13,11 @@
 	<li><a href="/viljaveoesileht/viljavedu">viljavedu</a></li>
   </ul>
   
-  <form method="POST", action = "/viljaveoesileht/valitudauto">
+  <ul><% viljaveduList.forEach(function(listItem){ %>
+	<li>auto regsitrinumber: <%= listItem.number %>, sisenemismass: <%= listItem.inWeight %>, väljumismass: <%= listItem.outWeight %>, vilja kogumass: <%= listItem.cropWeight %>
+	<% }); %></li>
+  </ul>
+  <form method="POST", action="/viljaveoesileht/massita">
     <label for="veduSelect">Vali autonumber</label>
 	<br>
 	<select id="veduSelect" name="veduSelect">
@@ -22,11 +26,10 @@
 			<option value="<%= viljavedu.id %>"><%= viljavedu.number %> </option>
 		<% }); %>
 	</select>
-	<br>
-  <ul><% viljaveduList.forEach(function(listItem){ %>
-	<li>auto regsitrinumber: <%= listItem.number %>, sisenemismass: <%= listItem.inWeight %>, väljumismass: <%= listItem.outWeight %>, vilja kogumass: <%= listItem.cropWeight %>
-	<% }); %></li>
-  </ul>
+	<label for="outWeightInput">väljumismass</label>
+	<input id="outWeightInput" name="outWeightInput" type="text" placeholder="Väljumismass...">
+	<input id="viljaveduSubmit" name="viljaveduSubmit" type="submit" value="Salvesta">
+  </form>
 </body>
 </html>
 </html>

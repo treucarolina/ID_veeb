@@ -64,7 +64,7 @@ const viljaveduAddPost = async (req, res)=>{
 		try {
 			conn = await mysql.createConnection(dbConf);
 			let cropWeight = req.body.inWeightInput - req.body.outWeightInput;
-			const [result] = await conn.execute(sqlReq, [req.body.numberInput, req.body.inWeightInput, req.body.outWeightInput, cropWeight]);
+			const [result] = await conn.execute(sqlReq, [req.body.numberInput, req.body.inWeightInput, req.body.outWeightInput || null, cropWeight || null]);
 			console.log("Salvestati kirje id:" + result.insertId);
 			res.render("viljavedu", {notice: "Andmed on salvestatud!"});
 		}
@@ -81,6 +81,53 @@ const viljaveduAddPost = async (req, res)=>{
 	//}
 };
 
+const viljaveduMassita = async (req, res)=>{
+	let conn;
+	let sqlReq = "SELECT * FROM viljavedu WHERE outWeight IS NULL";
+	try {
+		conn = await mysql.createConnection(dbConf);
+		console.log("Andmebaasiühendus loodud!");
+		const [rows, fields] = await conn.execute(sqlReq);
+		res.render("massita", {viljaveduList: rows});
+	}
+	catch(err) {
+		console.log("Viga: " + err);
+		res.render("massita", {viljaveduList: []});
+	}
+	finally {
+		if(conn){
+			await conn.end();
+			console.log("Andmebaasiühendus suletus!");
+		}
+	}
+};
+
+const viljaveduMassitaPost = async (req, res)=>{
+	let conn;
+	let outWeight = null;
+	if (req.body.outWeightInput != null){
+		outWeight = req.body.outWeightInput;
+	};
+	const id = req.body.veduSelect;
+	let sqlReq = "UPDATE viljavedu SET outWeight = ?, cropWeight = inWeight - ? WHERE id = ?;";
+	try {
+		conn = await mysql.createConnection(dbConf);
+		console.log("Andmebaasiühendus loodud!");
+		const [rows, fields] = await conn.execute(sqlReq, [outWeight, outWeight, id]);
+		res.redirect("/viljaveoesileht/massita");
+	}
+	catch(err) {
+		console.log("Viga: " + err);
+		res.render("massita", {viljaveduList: []});
+	}
+	finally {
+		if(conn){
+			await conn.end();
+			console.log("Andmebaasiühendus suletus!");
+		}
+	}
+};
+
 const viljaveduValitud = async (req, res)=>{
 	let conn;
 	const id = req.body.veduSelect;
@@ -90,6 +137,7 @@ const viljaveduValitud = async (req, res)=>{
 		console.log("Andmebaasiühendus loodud!");
 		const [rows, fields] = await conn.execute(sqlReq, [id]);
 		res.render("valitudauto", {viljaveduList: rows});
+		
 	}
 	catch(err) {
 		console.log("Viga: " + err);
@@ -107,10 +155,14 @@ const viljaveduValitud = async (req, res)=>{
 
 
 
+
+
 module.exports = {
 	viljaveduHomePage,
 	viljaveduSummary,
 	viljaveduAdd,
 	viljaveduAddPost,
-	viljaveduValitud
+	viljaveduValitud,
+	viljaveduMassita,
+	viljaveduMassitaPost
 };
